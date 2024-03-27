@@ -1,0 +1,43 @@
+{%  extends "base.html" %}
+{% load static %}
+{% block main %}
+<div class="max-w-[85rem] px-4 py-4 sm:px-6 lg:px-8 lg:py-14 mx-auto">    
+    <div class="max-w-2xl mx-auto text-center mt-10 mb-10 lg:mb-14">
+        <h2 class="text-4xl font-bold md:text-4xl md:leading-tight dark:text-white">Brands</h2>
+    </div>
+    {% if request.user.is_staff %}
+    <div class="flex justify-center mt-4 items-center">
+        <a class="py-3 px-4 inline-flex sm:justify-end items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 ml-auto" href="{% url 'brand-create' %}">
+            Add brand
+        </a>
+    </div>
+    {% endif %}
+</div>
+    <div class="flex flex-wrap justify-center items-center p-8  gap-12">
+{% for brand in object_list %}
+    <div class="w-full flex flex-col group bg-white border shadow-sm rounded-xl overflow-hidden hover:shadow-lg transition dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7] w-80 p-4 md:p-5 mb-6" href="#">
+      <div class="relative pt-[50%] sm:pt-[60%] lg:pt-[80%] rounded-t-xl overflow-hidden">
+        <img class="w-full h-56 top-0 start-0 rounded-xl object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out rounded-t-xl" src="{% if brand.logo %}{{ brand.logo.url }}{% else %}{%  static 'images/no_image.jpg' %}{% endif %}" alt="Image Description">
+      </div>
+      <div class="p-4 md:p-5">
+        <h3 class="text-lg text-center font-bold text-gray-800 dark:text-white">
+            {{ brand.name }}
+        </h3>
+      </div>
+     <div class="flex flex-col gap-3 w-full sm:inline-flex">
+        <a class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="{% url 'cars-by-brand' slug=brand.slug %}">
+          See all cars
+        </a>
+         {% if request.user.is_staff %}
+         <a class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="{% url 'brand-edit' slug=brand.slug %}">
+          Edit 
+        </a>
+         <a class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="{% url 'brand-delete' slug=brand.slug %}">
+          Delete 
+        </a>
+         {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
