@@ -1,0 +1,9 @@
+# created by virtualenv automatically
+*.venv
+.env
+node_modules/
+.idea/dataSources
+.idea/dataSources.local.xml
+.idea/dataSources.xml
+tailwindcss
+mediafiles/
