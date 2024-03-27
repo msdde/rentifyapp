@@ -1,7 +1,0 @@
-# created by virtualenv automatically
-*.venv
-.env
-node_modules/
-.idea/
-tailwindcss
-mediafiles/
