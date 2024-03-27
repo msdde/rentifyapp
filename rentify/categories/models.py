@@ -23,7 +23,9 @@ class Category(models.Model):
     )
 
     image = models.ImageField(
-        upload_to="categories/"
+        upload_to="categories/",
+        blank=True,
+        null=True,
     )
 
     def save(self, *args, **kwargs):

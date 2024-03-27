@@ -1,13 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-
-from rentify.cars.models import Cars
 from rentify.categories.forms import CreateCategoryForm
 from rentify.categories.models import Category
 
 
-class CreateCategoryView(CreateView):
+class CreateCategoryView(LoginRequiredMixin, CreateView):
     template_name = "categories/category-create.html"
     form_class = CreateCategoryForm
     success_url = reverse_lazy("categories-list")
@@ -19,7 +18,7 @@ class CategoriesListView(ListView):
     context_object_name = "category"
 
 
-class EditCategoryView(UpdateView):
+class EditCategoryView(LoginRequiredMixin, UpdateView):
     queryset = Category.objects.all()
     fields = "__all__"
     template_name = "categories/category-edit.html"
@@ -47,3 +46,12 @@ class DeleteCategoryView(LoginRequiredMixin, DeleteView):
         category = Category.objects.get(slug=slug)  # Fetching the category object
         context['category'] = category
         return context
+
+
+# def category_count(request):
+#     categories_count = Category.objects.count()
+#     context = {
+#         "categories_count": categories_count
+#     }
+#
+#     return render(request, "vanilla/index.html", context)

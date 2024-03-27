@@ -1,8 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
+from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView
+from rentify.brands.models import Brand
 from rentify.cars.forms import CreateCarForm
+from rentify.cars.mixins import SlugMixin
 from rentify.cars.models import Cars
 from rentify.categories.models import Category
 
@@ -17,6 +19,7 @@ class CreateCarView(LoginRequiredMixin, CreateView):
         # Add additional context data
         context["year"] = 2020
         context["categories"] = Category.objects.all()
+        context["brands"] = Brand.objects.all()
         return context
 
     def get_success_url(self):
@@ -47,6 +50,7 @@ class EditCarView(LoginRequiredMixin, UpdateView):
         # populate the context with object attributes
         context.update({attr: getattr(self.object, attr) for attr in attributes})
         context["categories"] = Category.objects.all()
+        context["brands"] = Brand.objects.all()
         context["car"] = self.object
         return context
 
@@ -64,22 +68,52 @@ class DeleteCarView(LoginRequiredMixin, DeleteView):
         return context
 
 
-class CarsByCategoriesListView(ListView):
+class CarsByCategoriesListView(SlugMixin, ListView):
     template_name = "cars/cars-by-categories.html"
+    context_object_name = 'cars_list'
+    model = Cars
+
+    # Moved to mixins.py
+    # separate function to get the slug and use it further
+    # def get_slug(self):
+    #     slug = self.kwargs['slug']
+    #     return slug
+
+    # fetching the category name based on the slug in url
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.get(slug=self.get_slug())  # Fetching the category object
+        context['category'] = category
+        return context
+
+    def get_queryset(self):
+        category = Category.objects.get(slug=self.get_slug())
+        queryset = Cars.objects.filter(category=category)
+        return queryset
+
+
+class CarsByBrandListView(SlugMixin, ListView):
+    template_name = "cars/cars-by-brand.html"
     context_object_name = 'cars_list'
     model = Cars
 
     # fetching the category name based on the slug in url
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        slug = self.kwargs['slug']
-        category = Category.objects.get(slug=slug)  # Fetching the category object
-        context['category'] = category
+        brand = Brand.objects.get(slug=self.get_slug())  # Fetching the category object
+        context['brand'] = brand
         return context
 
     def get_queryset(self):
-        slug = self.kwargs['slug']
-        category = Category.objects.get(slug=slug)
-        queryset = Cars.objects.filter(category=category)
+        brand = Brand.objects.get(slug=self.get_slug())
+        queryset = Cars.objects.filter(brand=brand)
         return queryset
 
+
+# def car_count(request):
+#     cars_count = Cars.objects.count()
+#     context = {
+#         "cars_count": cars_count
+#     }
+#
+#     return render(request, "vanilla/index.html", context)

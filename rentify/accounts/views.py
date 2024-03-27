@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 from rentify.accounts.forms import RentifyUserCreationForm, LoginForm, RentifyChangeForm, ProfileEditForm
@@ -73,3 +73,12 @@ class ProfileDeleteView(LoginRequiredMixin, DeleteView):
         user = self.get_object()
         user.delete()
         return redirect(self.get_success_url())
+
+
+def profile_count(request):
+    profiles_count = RentifyProfile.objects.all().count()
+    context = {
+        "profiles_count": profiles_count
+    }
+
+    return render(request, "vanilla/index.html", context)

@@ -14,19 +14,38 @@
     {% block main %}
     {% endblock %}
     {% include "vanilla/footer.html" %}
-    <script src="{% static 'preline/dist/preline.js' %}"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const inputField = document.getElementById('id_image');
-        const label = inputField.nextElementSibling;
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const nameInput = document.querySelector('#name');
+          const slugInput = document.querySelector('#slug');
     
-        inputField.addEventListener('change', function() {
-            const fileName = inputField.files[0].name;
-            label.textContent = fileName;
-    });
-});
-</script>
-
+          nameInput.addEventListener('input', function() {
+            const name = this.value;
+            slugInput.value = slugify(name);
+          });
+    
+          function slugify(text) {
+            return text.toString().toLowerCase()
+              .replace(/\s+/g, '-')           // Replace spaces with -
+              .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+              .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+              .replace(/^-+/, '')             // Trim - from start of text
+              .replace(/-+$/, '');            // Trim - from end of text
+          }
+        });
+      </script>
+        <script src="{% static 'preline/dist/preline.js' %}"></script>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputField = document.getElementById('id_image');
+            const label = inputField.nextElementSibling;
+        
+            inputField.addEventListener('change', function() {
+                const fileName = inputField.files[0].name;
+                label.textContent = fileName;
+            });
+        });
+    </script>
 </body>
 </html>
 {#<!-- Cookie banner -->#}

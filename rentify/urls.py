@@ -8,8 +8,8 @@ urlpatterns = [
     path("", include("rentify.vanilla.urls")),
     path("accounts/", include("rentify.accounts.urls")),
     path("cars/", include("rentify.cars.urls")),
-    path("categories/", include("rentify.categories.urls"))
-
+    path("categories/", include("rentify.categories.urls")),
+    path("brands/", include("rentify.brands.urls")),
 ]
 
 if settings.DEBUG:

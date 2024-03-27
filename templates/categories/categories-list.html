@@ -17,10 +17,10 @@
 {% for category in object_list %}
     <div class="w-full flex flex-col group bg-white border shadow-sm rounded-xl overflow-hidden hover:shadow-lg transition dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7] w-80 p-4 md:p-5 mb-6" href="#">
       <div class="relative pt-[50%] sm:pt-[60%] lg:pt-[80%] rounded-t-xl overflow-hidden">
-        <img class="w-full h-56 top-0 start-0 rounded-xl object-contain group-hover:scale-105 transition-transform duration-500 ease-in-out rounded-t-xl" src="{{ category.image.url }}" alt="Image Description">
+        <img class="w-full h-56 top-0 start-0 rounded-xl object-contain group-hover:scale-105 transition-transform duration-500 ease-in-out rounded-t-xl" src="{% if category.image %}{{ category.image.url }}{% else %}{%  static 'images/no_image.jpg' %}{% endif %}" alt="Image Description">
       </div>
       <div class="h-56 p-4 md:p-5">
-        <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+        <h3 class="text-lg text-center font-bold text-gray-800 dark:text-white">
             {{ category.name }}
         </h3>
         <p class="h-30 overflow-hidden mt-1 text-gray-500 dark:text-gray-40 line-clamp-3">
