@@ -10,7 +10,9 @@ urlpatterns = [
     path("cars/", include("rentify.cars.urls")),
     path("categories/", include("rentify.categories.urls")),
     path("brands/", include("rentify.brands.urls")),
+    path("reviews/", include("rentify.reviews.urls")),
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -32,7 +32,8 @@ INSTALLED_APPS = [
     "rentify.accounts.apps.AccountsConfig",
     "rentify.cars.apps.CarsConfig",
     "rentify.categories.apps.CategoriesConfig",
-    "rentify.brands.apps.BrandsConfig"
+    "rentify.brands.apps.BrandsConfig",
+    "rentify.reviews.apps.ReviewsConfig"
 ]
 
 MIDDLEWARE = [

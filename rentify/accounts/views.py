@@ -1,11 +1,15 @@
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
-from rentify.accounts.forms import RentifyUserCreationForm, LoginForm, RentifyChangeForm, ProfileEditForm
+from rentify.accounts.forms import RentifyUserCreationForm, LoginForm, ProfileEditForm
 from rentify.accounts.models import RentifyProfile
+from rentify.brands.models import Brand
+from rentify.cars.models import Cars
+from rentify.categories.models import Category
+from rentify.reviews.models import Review
 
 UserModel = get_user_model()
 
@@ -40,9 +44,24 @@ def logout_user(request):
     return redirect("index")
 
 
+class Categories:
+    pass
+
+
 class ProfileDetailsView(DetailView):
     queryset = RentifyProfile.objects.all()
     template_name = "accounts/profile-details.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Get the count of reviews for the current user's profile
+        context["review_count"] = Review.objects.filter(author=self.object).count()
+        context["profiles_count"] = RentifyProfile.objects.all().count()
+        context["cars_count"] = Cars.objects.all().count()
+        context["categories_count"] = Category.objects.all().count()
+        context["brands_count"] = Brand.objects.all().count()
+
+        return context
 
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):

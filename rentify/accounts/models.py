@@ -77,6 +77,7 @@ class RentifyProfile(models.Model):
     user = models.OneToOneField(
         RentifyUser,
         primary_key=True,
+        related_name="user_profile",
         on_delete=models.CASCADE,
     )
 

@@ -8,43 +8,46 @@
             <div class="w-full flex justify-center">
                 <div class="relative">
                     {% if object.profile_picture %}
-                    <img src="{{ object.profile_picture.url }}" alt="profile-picture" class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]"/>
+                    <img src="{{ object.profile_picture.url }}" alt="profile-picture" class="shadow-xl rounded-xl align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]"/>
                     {% else %}
-                    <img src="{% static 'images/no-profile-picture.png' %}" alt="blank-profile-picture" class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]"/>
+                    <img src="{% static 'images/no-profile-picture.png' %}" alt="blank-profile-picture" class="shadow-xl rounded-xl align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]"/>
                     {% endif %}                
                 </div>
             </div>
             <div class="w-full text-center mt-20">
-                <div class="flex justify-center lg:pt-4 pt-8 pb-0">
+                <div class="flex flex-wrap justify-between lg:pt-4 pt-8 pb-0">
                     <div class="p-3 text-center">
-                        <span class="text-xl font-bold block tracking-wide text-slate-400">{{ object.user.email }}</span>
+                        <span class="text-lg font-bold block tracking-wide text-slate-400">{{ object.user.email }}</span>
                         <span class="text-sm font-bold text-slate-400">Email</span>
                     </div>
                     <div class="p-3 text-center">
                         {% if object.phone_number != None %}
-                        <span class="text-xl font-bold block uppercase tracking-wide text-slate-400">{{ object.phone_number }}</span>
+                        <span class="text-lg font-bold block uppercase tracking-wide text-slate-400">{{ object.phone_number }}</span>
                         {% else %}
-                        <span class="text-xl font-bold block tracking-wide text-slate-400">No phone number</span>
+                        <span class="text-lg font-bold block tracking-wide text-slate-400">No phone number</span>
                         {% endif %}
                         <span class="text-sm font-bold text-slate-400">Phone</span>
-                        
                     </div>
                 </div>
+            <div class="p-3 text-center">
+                        <span class="text-lg font-bold block tracking-wide text-slate-400">{{ review_count }}</span>
+                        <span class="text-sm font-bold text-slate-400">Reviews</span>
+                    </div>   
             </div>
         </div>
         <div class="text-center mt-2">
             {% if object.first_name or object.last_name != None %}
-            <h3 class="text-4xl text-white font-bold leading-normal mb-1">
+            <h3 class="text-xl text-white font-bold leading-normal mb-1">
                 {% if object.first_name == None %} {% else %}{{ object.first_name }}{% endif %} {% if object.last_name == None %} {% else %}{{ object.last_name }}{% endif %}
             </h3>
             {% else%}
-            <h3 class="text-2xl text-white font-bold leading-normal mb-1">No names added</h3>
+            <h3 class="text-lg text-white leading-normal mb-1">No names added</h3>
             {% endif %}
-            <div class="text-lg mt-0 mb-2 text-slate-400 font-bold ">
+            <div class="text-lg mt-0 mb-2 text-slate-400 ">
                 {% if object.city or object.country != None %}
-                <i class="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>{% if object.city == None %} {% else %}{{ object.city }} {% endif %} {% if object.country == None %} {% else %}{{ object.country }}{% endif %}
+                <i class="text-lg fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>{% if object.city == None %} {% else %}{{ object.city }} {% endif %} {% if object.country == None %} {% else %}{{ object.country }}{% endif %}
                 {% else %}
-                <i class="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>
+                <i class="text-lg fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>
                     There is no info about your city and country
                 {% endif %}
             </div>

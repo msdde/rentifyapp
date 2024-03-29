@@ -1,5 +1,4 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView
 from rentify.brands.models import Brand
@@ -7,9 +6,10 @@ from rentify.cars.forms import CreateCarForm
 from rentify.cars.mixins import SlugMixin
 from rentify.cars.models import Cars
 from rentify.categories.models import Category
+from rentify.vanilla.mixins import StaffRequiredMixin
 
 
-class CreateCarView(LoginRequiredMixin, CreateView):
+class CreateCarView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
     template_name = "cars/car-create.html"
     form_class = CreateCarForm
     success_url = reverse_lazy("cars/cars-list.html")
@@ -35,7 +35,7 @@ class CarsListView(ListView):
     template_name = "cars/cars-list.html"
 
 
-class EditCarView(LoginRequiredMixin, UpdateView):
+class EditCarView(LoginRequiredMixin, StaffRequiredMixin, UpdateView):
     queryset = Cars.objects.all()
     fields = "__all__"
     template_name = "cars/car-edit.html"
@@ -55,15 +55,14 @@ class EditCarView(LoginRequiredMixin, UpdateView):
         return context
 
 
-class DeleteCarView(LoginRequiredMixin, DeleteView):
+class DeleteCarView(LoginRequiredMixin, StaffRequiredMixin, SlugMixin, DeleteView):
     model = Cars
     template_name = "cars/car-delete.html"
     success_url = reverse_lazy("cars-list")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        slug = self.kwargs['slug']
-        car = Cars.objects.get(slug=slug)  # Fetching the category object
+        car = Cars.objects.get(slug=self.get_slug())  # Fetching the category object
         context['car'] = car
         return context
 
@@ -108,12 +107,3 @@ class CarsByBrandListView(SlugMixin, ListView):
         brand = Brand.objects.get(slug=self.get_slug())
         queryset = Cars.objects.filter(brand=brand)
         return queryset
-
-
-# def car_count(request):
-#     cars_count = Cars.objects.count()
-#     context = {
-#         "cars_count": cars_count
-#     }
-#
-#     return render(request, "vanilla/index.html", context)

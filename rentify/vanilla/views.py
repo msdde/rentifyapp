@@ -1,19 +1,13 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView
 
-from rentify.vanilla.utils import get_counts
+from rentify.reviews.models import Review
 
 
 class IndexView(TemplateView):
     template_name = "vanilla/index.html"
 
-
-def counts_view(request):
-    profile_count, car_count, brand_count, category_count = get_counts()
-
-    context = {
-        'car_count': car_count,
-        'brand_count': brand_count,
-        'category_count': category_count,
-    }
-    return render(request, "vanilla/index.html", context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Get the count of reviews for the current user's profile
+        context['reviews_count'] = Review.objects.all().count()
+        return context

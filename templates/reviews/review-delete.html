@@ -13,20 +13,20 @@
 
           <div class="grow">
             <h3 class="mb-2 text-xl font-bold text-gray-800 dark:text-gray-200">
-              Delete {{ car.brand.name }} {{ car.model }}
+              Delete review
             </h3>
             <p class="text-gray-500">
-              Permanently remove car and all of its contents from the Rentify platform. This action is not reversible, so please continue with caution.
+                Permanently remove review from the Rentify platform. This action is not reversible, so please continue with caution.
             </p>
           </div>
         </div>
       </div>
 
       <div class="flex justify-end items-center gap-x-2 py-3 px-4 bg-gray-50 border-t rounded-b-lg border-white dark:bg-gray-800 dark:border-gray-700">
-        <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 text-gray-800 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 bg-indigo-500" data-hs-overlay="#hs-danger-alert" href="{% url 'cars-list' %}">
+        <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 text-gray-800 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 bg-indigo-500" data-hs-overlay="#hs-danger-alert" href="{% url 'brands-list' %}">
             Cancel
         </a>
-        <form action="{% url 'car-delete' slug=car.slug %}" method="post">
+        <form action="{% url 'review-delete' pk=review.pk %}" method="post">
             {% csrf_token %}
             <button type="submit" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" data-hs-overlay="#hs-danger-alert">
                 Delete

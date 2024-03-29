@@ -1,12 +1,13 @@
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from rentify.brands.forms import CreateBrandForm
 from rentify.brands.models import Brand
+from rentify.vanilla.mixins import StaffRequiredMixin
 
 
-class CreateBrandView(LoginRequiredMixin, CreateView):
+class CreateBrandView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
     template_name = "brands/brand-create.html"
     form_class = CreateBrandForm
     success_url = reverse_lazy("brands-list")
@@ -18,7 +19,7 @@ class BrandsListView(ListView):
     context_object_name = "brand"
 
 
-class EditBrandView(LoginRequiredMixin, UpdateView):
+class EditBrandView(LoginRequiredMixin, StaffRequiredMixin, UpdateView):
     queryset = Brand.objects.all()
     fields = "__all__"
     template_name = "brands/brand-edit.html"
@@ -35,23 +36,14 @@ class EditBrandView(LoginRequiredMixin, UpdateView):
         return context
 
 
-class DeleteBrandView(LoginRequiredMixin, DeleteView):
+class DeleteBrandView(StaffRequiredMixin, DeleteView):
     model = Brand
     template_name = "brands/brand-delete.html"
     success_url = reverse_lazy("brands-list")
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        slug = self.kwargs['slug']
-        brand = Brand.objects.get(slug=slug)  # Fetching the category object
-        context['brand'] = brand
-        return context
-
-
-# def brand_count(request):
-#     brands_count = Brand.objects.count()
-#     context = {
-#         "brands_count": brands_count
-#     }
-#
-#     return render(request, "vanilla/index.html", context)
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     slug = self.kwargs['slug']
+    #     brand = Brand.objects.get(slug=slug)  # Fetching the category object
+    #     context['brand'] = brand
+    #     return context

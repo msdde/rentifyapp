@@ -78,12 +78,8 @@ class Cars(models.Model):
         super().save(*args, **kwargs)
 
         if not self.slug:
-            self.slug = slugify(f"{self.brand.name}-{self.model}")
-        counter = 1
-        if Cars.objects.filter(slug=self.slug).exists():
-            self.slug = slugify(f"{self.brand.name}-{self.model}-{str(counter)}")
-            counter += 1
-        super().save(*args, **kwargs)
+            self.slug = slugify(f"{self.pk} {self.brand.name}-{self.model}")
+
 
 
 
