@@ -16,11 +16,11 @@
             </div>
             <div class="w-full text-center mt-20">
                 <div class="flex flex-wrap justify-between lg:pt-4 pt-8 pb-0">
-                    <div class="p-3 text-center">
-                        <span class="text-lg font-bold block tracking-wide text-slate-400">{{ object.user.email }}</span>
+                    <div class="w-full p-3 text-center">
+                        <span class="w-full text-lg font-bold block tracking-wide text-slate-400">{{ object.user.email }}</span>
                         <span class="text-sm font-bold text-slate-400">Email</span>
                     </div>
-                    <div class="p-3 text-center">
+                    <div class="w-full p-3 text-center">
                         {% if object.phone_number != None %}
                         <span class="text-lg font-bold block uppercase tracking-wide text-slate-400">{{ object.phone_number }}</span>
                         {% else %}
@@ -29,10 +29,21 @@
                         <span class="text-sm font-bold text-slate-400">Phone</span>
                     </div>
                 </div>
-            <div class="p-3 text-center">
+            <div class="mb-4 w-full flex justify-around">
+                <div class="p-3 text-center">
+                    <a href="{% url 'profile-reviews' pk=request.user.pk %}">
                         <span class="text-lg font-bold block tracking-wide text-slate-400">{{ review_count }}</span>
                         <span class="text-sm font-bold text-slate-400">Reviews</span>
-                    </div>   
+                    </a>
+                </div>
+                <div class="p-3 text-center">
+                    <a href="{% url 'profile-bookings' pk=request.user.pk %}">
+                        <span class="text-lg font-bold block tracking-wide text-slate-400">{{ booking_count }}</span>
+                        <span class="text-sm font-bold text-slate-400">Bookings</span>
+                    </a>
+                </div>
+            </div>
+            
             </div>
         </div>
         <div class="text-center mt-2">

@@ -33,7 +33,11 @@ INSTALLED_APPS = [
     "rentify.cars.apps.CarsConfig",
     "rentify.categories.apps.CategoriesConfig",
     "rentify.brands.apps.BrandsConfig",
-    "rentify.reviews.apps.ReviewsConfig"
+    "rentify.reviews.apps.ReviewsConfig",
+    "rentify.bookings.apps.BookingsConfig",
+
+    # 3rd party
+    "bootstrap_datepicker_plus",
 ]
 
 MIDDLEWARE = [
@@ -107,7 +111,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 

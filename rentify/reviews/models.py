@@ -1,5 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from rentify.accounts.models import RentifyProfile
+
+UserModel = get_user_model()
 
 
 class Review(models.Model):
@@ -10,8 +13,8 @@ class Review(models.Model):
     )
 
     author = models.ForeignKey(
-        RentifyProfile,
-        related_name="user_profile",
+        UserModel,
+        related_name="user_model",
         on_delete=models.CASCADE
 
     )

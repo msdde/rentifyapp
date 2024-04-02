@@ -1,15 +1,14 @@
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 from rentify.accounts.forms import RentifyUserCreationForm, LoginForm, ProfileEditForm
 from rentify.accounts.models import RentifyProfile
-from rentify.brands.models import Brand
-from rentify.cars.models import Cars
-from rentify.categories.models import Category
+from rentify.bookings.models import Booking
 from rentify.reviews.models import Review
+from rentify.vanilla.mixins import UserRequestPersonalInfoMixin
 
 UserModel = get_user_model()
 
@@ -23,8 +22,12 @@ class UserLoginView(LoginView):
 class UserSignUpView(CreateView):
     template_name = "accounts/signup.html"
     form_class = RentifyUserCreationForm
-    success_url = reverse_lazy("index")
     user = UserModel
+
+    def get_success_url(self):
+        return reverse("profile-edit", kwargs={
+            "pk": self.object.pk,
+        })
 
     def form_valid(self, form):
         result = super().form_valid(form)
@@ -44,10 +47,6 @@ def logout_user(request):
     return redirect("index")
 
 
-class Categories:
-    pass
-
-
 class ProfileDetailsView(DetailView):
     queryset = RentifyProfile.objects.all()
     template_name = "accounts/profile-details.html"
@@ -55,19 +54,18 @@ class ProfileDetailsView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Get the count of reviews for the current user's profile
-        context["review_count"] = Review.objects.filter(author=self.object).count()
-        context["profiles_count"] = RentifyProfile.objects.all().count()
-        context["cars_count"] = Cars.objects.all().count()
-        context["categories_count"] = Category.objects.all().count()
-        context["brands_count"] = Brand.objects.all().count()
+        profile = self.get_object()  # Get the RentifyProfile instance
+        review_count = Review.objects.filter(author=profile.user).count()       # Show reviews by the associated user
+        booking_count = Booking.objects.filter(bill_to=profile.user).count()     # Show reviews by the associated user
+        context["review_count"] = review_count
+        context["booking_count"] = booking_count
 
         return context
 
 
-class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+class ProfileUpdateView(UserRequestPersonalInfoMixin, LoginRequiredMixin, UpdateView):
     queryset = RentifyProfile.objects.all()
     template_name = "accounts/profile-edit.html"
-    # fields = ["first_name", "last_name", "city", "country", "profile_picture", "phone_number"]
     form_class = ProfileEditForm
 
     def get_success_url(self):
@@ -80,7 +78,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class ProfileDeleteView(LoginRequiredMixin, DeleteView):
+class ProfileDeleteView(UserRequestPersonalInfoMixin, LoginRequiredMixin, DeleteView):
     model = UserModel
     template_name = "accounts/profile-delete.html"
     success_url = reverse_lazy("index")
@@ -92,12 +90,3 @@ class ProfileDeleteView(LoginRequiredMixin, DeleteView):
         user = self.get_object()
         user.delete()
         return redirect(self.get_success_url())
-
-
-def profile_count(request):
-    profiles_count = RentifyProfile.objects.all().count()
-    context = {
-        "profiles_count": profiles_count
-    }
-
-    return render(request, "vanilla/index.html", context)

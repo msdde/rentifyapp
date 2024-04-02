@@ -27,7 +27,7 @@
       <div class="flex justify-between p-4 rounded-b-xl md:px-6">
           <div>
             <h3 class="text-sm font-semibold text-gray-800 sm:text-base dark:text-gray-200">
-              {{ review.author.first_name }} {{ review.author.last_name }}
+              {{ review.author.user_profile.first_name }} {{ review.author.user_profile.last_name }}
             </h3>
             <p class="text-sm text-gray-500">
                 {{  review.date|date:"d M Y" }}

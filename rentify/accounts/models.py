@@ -29,6 +29,9 @@ class RentifyUser(AbstractBaseUser, PermissionsMixin):
 
     objects = RentifyUserManager()
 
+    def __str__(self):
+        return self.email.split('@')[0]
+
 
 # regular user profile
 class RentifyProfile(models.Model):
@@ -57,19 +60,19 @@ class RentifyProfile(models.Model):
     )
 
     city = models.CharField(
-        max_length=250,
+        max_length=20,
         null=True,
         blank=True
     )
 
     country = models.CharField(
-        max_length=250,
+        max_length=30,
         null=True,
         blank=True
     )
 
     bio = models.TextField(
-        max_length=500,
+        max_length=200,
         blank=True,
         null=True,
     )

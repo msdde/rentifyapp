@@ -1,6 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView, TemplateView
+
+from rentify.bookings.forms import CarBookingForm
 from rentify.brands.models import Brand
 from rentify.cars.forms import CreateCarForm
 from rentify.cars.mixins import SlugMixin

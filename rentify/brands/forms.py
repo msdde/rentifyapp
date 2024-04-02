@@ -1,6 +1,5 @@
 from django import forms
 from django.utils.text import slugify
-
 from rentify.brands.models import Brand
 
 
@@ -11,7 +10,7 @@ class CreateBrandForm(forms.ModelForm):
 
     def clean_name(self):
         name = self.cleaned_data.get("name")
-        if Brand.objects.filter(name=name).exists():
+        if Brand.objects.filter(name__iexact=name).exists():
             raise forms.ValidationError("Brand with this name already exists.")
 
         return name

@@ -1,6 +1,4 @@
-from functools import wraps
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseForbidden
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from rentify.categories.forms import CreateCategoryForm
@@ -41,10 +39,3 @@ class DeleteCategoryView(LoginRequiredMixin, StaffRequiredMixin, DeleteView):
     model = Category
     template_name = "categories/category-delete.html"
     success_url = reverse_lazy("categories-list")
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     slug = self.kwargs['slug']
-    #     category = Category.objects.get(slug=slug)  # Fetching the category object
-    #     context['category'] = category
-    #     return context

@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from rentify.reviews.views import CreateReviewView, ReviewsListView, DeleteReviewView
+from rentify.reviews.views import CreateReviewView, ReviewsListView, DeleteReviewView, ReviewsByUserView
 
 urlpatterns = [
     path("", ReviewsListView.as_view(), name="reviews-list"),

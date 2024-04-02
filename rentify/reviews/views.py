@@ -1,10 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
+
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView
 
 from rentify.accounts.models import RentifyProfile
 from rentify.reviews.forms import CreateReviewForm
 from rentify.reviews.models import Review
+from rentify.vanilla.mixins import UserRequestPersonalInfoMixin
 
 
 class CreateReviewView(LoginRequiredMixin, CreateView):
@@ -19,9 +22,8 @@ class CreateReviewView(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        form.save(commit=False)
-        form.instance.author = RentifyProfile.objects.get(pk=self.request.user.id)
-        form.save()
+        # Assign the user associated with the profile to the author field of the review
+        form.instance.author = self.request.user
         return super().form_valid(form)
 
 
@@ -35,3 +37,19 @@ class DeleteReviewView(LoginRequiredMixin, DeleteView):
     model = Review
     template_name = "reviews/review-delete.html"
     success_url = reverse_lazy("reviews-list")
+
+    # prevent user to access the delete form of someone else review
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.pk != self.get_object().author.user_profile.pk:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+
+class ReviewsByUserView(UserRequestPersonalInfoMixin, LoginRequiredMixin, ListView):
+    template_name = "accounts/profile-reviews.html"
+    model = Review
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(author_id=self.kwargs['pk'])
+        return queryset
