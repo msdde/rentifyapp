@@ -35,9 +35,7 @@ INSTALLED_APPS = [
     "rentify.brands.apps.BrandsConfig",
     "rentify.reviews.apps.ReviewsConfig",
     "rentify.bookings.apps.BookingsConfig",
-
-    # 3rd party
-    "bootstrap_datepicker_plus",
+    "rentify.mail.apps.MailConfig"
 ]
 
 MIDDLEWARE = [
@@ -135,3 +133,12 @@ AUTH_USER_MODEL = "accounts.RentifyUser"
 LOGIN_REDIRECT_URL = reverse_lazy("index")
 LOGIN_URL = reverse_lazy("login")
 LOGOUT_REDIRECT_URL = reverse_lazy("index")
+
+# setup mailtrap.io for testing purpose
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "sandbox.smtp.mailtrap.io"
+EMAIL_HOST_USER = "d0ebca165201b3"
+EMAIL_HOST_PASSWORD = "b5966ab358c6c9"
+EMAIL_PORT = "2525"
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False

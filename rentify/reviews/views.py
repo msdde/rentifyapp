@@ -1,9 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
-
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView
-
 from rentify.accounts.models import RentifyProfile
 from rentify.reviews.forms import CreateReviewForm
 from rentify.reviews.models import Review
@@ -32,16 +30,21 @@ class ReviewsListView(ListView):
     template_name = "reviews/reviews-list.html"
     context_object_name = "review"
 
+    def get_queryset(self):
+        # Newest reviews will be on top
+        return Review.objects.order_by("-date")
+
 
 class DeleteReviewView(LoginRequiredMixin, DeleteView):
     model = Review
     template_name = "reviews/review-delete.html"
     success_url = reverse_lazy("reviews-list")
 
-    # prevent user to access the delete form of someone else review
+    # prevent user to access the delete form of someone else review, except staff or superuser
     def dispatch(self, request, *args, **kwargs):
-        if request.user.pk != self.get_object().author.user_profile.pk:
-            raise PermissionDenied
+        if not request.user.is_staff or not request.user.is_superuser:
+            if request.user.pk != self.get_object().author.user_profile.pk:
+                raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
 

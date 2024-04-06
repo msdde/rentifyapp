@@ -14,7 +14,6 @@ from rentify.vanilla.mixins import StaffRequiredMixin
 class CreateCarView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
     template_name = "cars/car-create.html"
     form_class = CreateCarForm
-    success_url = reverse_lazy("cars/cars-list.html")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

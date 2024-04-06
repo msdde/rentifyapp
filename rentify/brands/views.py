@@ -39,10 +39,3 @@ class DeleteBrandView(StaffRequiredMixin, DeleteView):
     model = Brand
     template_name = "brands/brand-delete.html"
     success_url = reverse_lazy("brands-list")
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     slug = self.kwargs['slug']
-    #     brand = Brand.objects.get(slug=slug)  # Fetching the category object
-    #     context['brand'] = brand
-    #     return context

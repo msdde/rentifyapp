@@ -23,5 +23,8 @@ rentify/reviews/migrations/00*
 rentify/vanilla/migrations/00*
 !/rentify/vanilla/migrations/0001_initial.py
 !/rentify/vanilla/migrations/__init__.py
+rentify/bookings/migrations/00*
+!/rentify/bookings/migrations/0001_initial.py
+!/rentify/bookings/migrations/__init__.py
 __pycache__
 

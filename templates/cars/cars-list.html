@@ -15,7 +15,6 @@
     {% endif %}
 </div>
 <div class="mt-7 flex flex-wrap justify-around justify-items-start px-12 gap-6">
-    {% if cars_list %}
     {% for car in cars_list %}
     <div class="w-full flex flex-col group bg-white border shadow-sm rounded-xl overflow-hidden hover:shadow-lg transition dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] w-[20em] flex-1 p-4 md:p-5 mb-6">
         <div class="relative pt-[50%] sm:pt-[60%] lg:pt-[80%] rounded-t-xl overflow-hidden">
@@ -82,7 +81,11 @@
     </div>
 </div>
 {% endfor %}
-{% else %}
-    <h1>no cars</h1>
-{% endif %}
+ {% if not object_list %}
+        <div class="items-center">
+        <a class="w-full py-3 px-4 text-white/[.8] text-3xl justify-center inline-flex text-center gap-x-2 text-sm font-semibold">
+            There are no cars yet!
+        </a>
+        </div>
+    {% endif %}
 {% endblock %}

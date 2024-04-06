@@ -12,6 +12,7 @@ urlpatterns = [
     path("brands/", include("rentify.brands.urls")),
     path("reviews/", include("rentify.reviews.urls")),
     path("booking/", include("rentify.bookings.urls")),
+    path("contact/", include("rentify.mail.urls")),
 ]
 
 

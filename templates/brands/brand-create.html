@@ -7,9 +7,6 @@
                 <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Add brand</h1>
             </div>
             <div class="mt-5">
-{#            <form action="{% url 'category-create' %}" method="post" enctype="multipart/form-data">#}
-{#                {% csrf_token %}#}
-{#            {{ form }}#}
             <!-- Form -->
                 <form action="{% url 'brand-create' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}

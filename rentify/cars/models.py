@@ -25,13 +25,6 @@ class Cars(models.Model):
         related_name="cars",
     )
 
-    # brand = models.CharField(
-    #     max_length=20,
-    #     choices=BRAND,
-    #     blank=False,
-    #     null=False,
-    # )
-
     model = models.CharField(
         max_length=20,
         blank=False,
@@ -63,7 +56,7 @@ class Cars(models.Model):
         blank=False,
     )
 
-    price = models.IntegerField(
+    price = models.PositiveIntegerField(
         blank=False,
         null=False,
     )
