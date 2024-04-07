@@ -36,8 +36,7 @@ class UserSignUpView(CreateView):
             'user': form.instance
         }
         RentifyProfile.objects.create(**profile_data)
-
-        login(self.request, form.instance)
+        login(self.request, form.instance, backend='django.contrib.auth.backends.ModelBackend')
 
         return result
 

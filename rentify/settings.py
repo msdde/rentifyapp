@@ -35,7 +35,15 @@ INSTALLED_APPS = [
     "rentify.brands.apps.BrandsConfig",
     "rentify.reviews.apps.ReviewsConfig",
     "rentify.bookings.apps.BookingsConfig",
-    "rentify.mail.apps.MailConfig"
+    "rentify.mail.apps.MailConfig",
+
+    # 3rd party
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "rentify.payments.apps.PaymentsConfig"
+
 ]
 
 MIDDLEWARE = [
@@ -46,6 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'rentify.urls'
@@ -142,3 +152,27 @@ EMAIL_HOST_PASSWORD = "b5966ab358c6c9"
 EMAIL_PORT = "2525"
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
+# SOCIALACCOUNT_SIGNUP_ON_GET=True
+
+STRIPE_PUBLIC_KEY = "pk_test_51P2afQHOt0jFjSrz2lusN8ZIYkry8eQrsfj078fa5mWUQXM30Ho0D5hEVfBh0cZ2BObzJPoyS1xXzXFlC7sQH7B200s9ongy9Z"
+STRIPE_SECRET_KEY = "sk_test_51P2afQHOt0jFjSrzzroxpsVPA1eMhTfj68jv6xU3HszfHG1Y0PCDr4LqbsX0YyByvs1QH7jdUCxAwttUZk2Dc3nu00JArDYPX2"
+
+
+# GOOGLE_SSO_CLIENT_ID = "536117606345-qki4i3flhf4kvb2pa3478vmg2r727qs9.apps.googleusercontent.com"
+# GOOGLE_SSO_PROJECT_ID = "rentify-419510"
+# GOOGLE_SSO_CLIENT_SECRET = "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"
+#
+# GOOGLE_SSO_ALLOWABLE_DOMAINS = ["example.com"]
+#

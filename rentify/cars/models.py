@@ -33,6 +33,7 @@ class Cars(models.Model):
 
     image = models.ImageField(
         upload_to="cars_image",
+        default="static/images/no_image.png",
         null=True,
         blank=True,
     )
