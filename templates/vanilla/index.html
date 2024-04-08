@@ -48,7 +48,7 @@
     <!-- Stats -->
     <div class="p-4 h-auto w-full rounded-lg border border-gray-200 text-gray-800 shadow-sm hover:bg-slate-900 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-slate-900 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
       <h4 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200">Total Cars</h4>
-      <p class="mt-2 sm:mt-3 text-4xl sm:text-6xl font-bold text-blue-600">{{ cars_count }}</p>
+      <p class="mt-2 sm:mt-3 text-4xl sm:text-3xl font-bold text-blue-600">{{ cars_count }}</p>
       <p class="mt-1 text-gray-500">Available for rent</p>
     </div>
     <!-- End Stats -->
@@ -56,29 +56,29 @@
     <!-- Stats -->
     <div class="p-4 h-auto w-full rounded-lg border border-gray-200 text-gray-800 shadow-sm hover:bg-slate-900 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-slate-900 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
       <h4 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200">Total Brands</h4>
-      <p class="mt-2 sm:mt-3 text-4xl sm:text-6xl font-bold text-blue-600">{{ brands_count }}</p>
+      <p class="mt-2 sm:mt-3 text-4xl sm:text-3xl font-bold text-blue-600">{{ brands_count }}</p>
       <p class="mt-1 text-gray-500">To choose from</p>
     </div>
     <!-- End Stats -->
 
     <!-- Stats -->
-    <div class="p-4 h-auto w-full sm:w-72 rounded-lg border border-gray-200 text-gray-800 shadow-sm hover:bg-slate-900 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-slate-900 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+    <div class="p-4 h-auto w-full rounded-lg border border-gray-200 text-gray-800 shadow-sm hover:bg-slate-900 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-slate-900 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
       <h4 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200">Total Categories</h4>
-      <p class="mt-2 sm:mt-3 text-4xl sm:text-6xl font-bold text-blue-600">{{ categories_count }}</p>
+      <p class="mt-2 sm:mt-3 text-4xl sm:text-3xl font-bold text-blue-600">{{ categories_count }}</p>
       <p class="mt-1 text-gray-500">For every needs</p>
     </div>
     <!-- End Stats -->
       <!-- Stats -->
     <div class="p-4 h-auto w-full rounded-lg border border-gray-200 text-gray-800 shadow-sm hover:bg-slate-900 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-slate-900 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
       <h4 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200">Total Reviews</h4>
-      <p class="mt-2 sm:mt-3 text-4xl sm:text-6xl font-bold text-blue-600">{{ review_count }}</p>
+      <p class="mt-2 sm:mt-3 text-4xl sm:text-3xl font-bold text-blue-600">{{ review_count }}</p>
       <p class="mt-1 text-gray-500">Made in the platform</p>
     </div>
     <!-- End Stats -->
         <!-- Stats -->
     <div class="p-4 h-auto w-full rounded-lg border border-gray-200 text-gray-800 shadow-sm hover:bg-slate-900 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-slate-900 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
       <h4 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200">Total Bookings</h4>
-      <p class="mt-2 sm:mt-3 text-4xl sm:text-6xl font-bold text-blue-600">{{ bookings_count }}</p>
+      <p class="mt-2 sm:mt-3 text-4xl sm:text-3xl font-bold text-blue-600">{{ bookings_count }}</p>
       <p class="mt-1 text-gray-500">By our users</p>
     </div>
     <!-- End Stats -->
@@ -97,7 +97,7 @@
 </div>
 <div class="mt-7 flex flex-wrap justify-around justify-items-start px-12 gap-6">
     {% for car in cars %}
-    <div class="w-full flex flex-col group bg-white border shadow-sm rounded-xl overflow-hidden hover:shadow-lg transition dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] w-[20em] flex-1 p-4 md:p-5 mb-6">
+    <div class="flex flex-col group bg-white border shadow-sm rounded-xl overflow-hidden hover:shadow-lg transition dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] flex-1 p-4 md:p-5 mb-6">
         <div class="relative pt-[50%] sm:pt-[60%] lg:pt-[80%] rounded-t-xl overflow-hidden">
             <img class="w-80 h-56 top-0 start-0 rounded-xl object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out rounded-t-xl" src="{% if car.image %}{{ car.image.url }}{% else %}{%  static 'images/no_image.jpg' %}{% endif %}" alt="Image Description">
         </div>
@@ -127,38 +127,41 @@
             </div>
         </div>
     <div class="flex flex-col mt-2 gap-3 w-full sm:inline-flex">
-        <form action="{% url 'car-booking' slug=car.slug %}"  method="post" >
-            <input type="hidden" name="bill_to" value="{{ request.user.id }}">
-            <input type="hidden" name="booked_car" value="{{ car.id }}">
-            <!-- Input field for start_date -->
-            <div class="flex mb-4">
-            <label for="start_date" class="block text-sm mb-2 dark:text-white"></label>
-            <input placeholder="Pick up date"
-                type="text"
-                onfocus="(this.type='date')"
-                onblur="(this.type='text')" id="start_date" name="start_date" required class="cursor-pointer text-center mr-2 w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-            <!-- Input field for end_date -->
-            <label for="end_date" class="block text-sm mb-2 dark:text-white"></label>
-            <input placeholder="Return date"
-                type="text"
-                onfocus="(this.type='date')"
-                onblur="(this.type='text')" id="end_date" name="end_date" required class="cursor-pointer text-center w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-            </div>
-        {% csrf_token %}
-        <div class="flex">
-            <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 ">
-                Book
-            </button>
-        </div>
-    </form>
-        {% if request.user.is_staff %}
-        <a class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="{% url 'car-edit' slug=car.slug %}">
-          Edit
+{#        <form action="{% url 'car-booking' slug=car.slug %}"  method="post" >#}
+{#            <input type="hidden" name="bill_to" value="{{ request.user.id }}">#}
+{#            <input type="hidden" name="booked_car" value="{{ car.id }}">#}
+{#            <!-- Input field for start_date -->#}
+{#            <div class="flex mb-4">#}
+{#            <label for="start_date" class="block text-sm mb-2 dark:text-white"></label>#}
+{#            <input placeholder="Pick up date"#}
+{#                type="text"#}
+{#                onfocus="(this.type='date')"#}
+{#                onblur="(this.type='text')" id="start_date" name="start_date" required class="cursor-pointer text-center mr-2 w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">#}
+{#            <!-- Input field for end_date -->#}
+{#            <label for="end_date" class="block text-sm mb-2 dark:text-white"></label>#}
+{#            <input placeholder="Return date"#}
+{#                type="text"#}
+{#                onfocus="(this.type='date')"#}
+{#                onblur="(this.type='text')" id="end_date" name="end_date" required class="cursor-pointer text-center w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">#}
+{#            </div>#}
+{#        {% csrf_token %}#}
+{#        <div class="flex">#}
+{#            <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 ">#}
+{#                Book#}
+{#            </button>#}
+{#        </div>#}
+{#    </form>#}
+{#        {% if request.user.is_staff %}#}
+{#        <a class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="{% url 'car-edit' slug=car.slug %}">#}
+{#          Edit#}
+{#        </a>#}
+{#         <a class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="{% url 'car-delete' slug=car.slug %}">#}
+{#          Delete#}
+{#        </a>#}
+{#        {% endif %}#}
+        <a class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 " href="{% url 'car-booking' slug=car.slug %}">
+          Book
         </a>
-         <a class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="{% url 'car-delete' slug=car.slug %}">
-          Delete
-        </a>
-        {% endif %}
     </div>
 </div>
 {% endfor %}
@@ -170,6 +173,7 @@
         </a>
     </div>
 {% endif %}
+    <!-- example -->
     <!-- Testimonials -->
 <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
 <div class="max-w-2xl mx-auto text-center mt-10 mb-10 lg:mb-14">
