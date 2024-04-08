@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main %}
+<main class="w-full max-w-3xl mx-auto p-6">
+    <div class="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-gray-800 dark:border-gray-700">
+        <div class="p-4 sm:p-7">
+            <div class="pb-4 text-center">
+                <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Edit car</h1>
+            </div>
+            <div class="mt-5">
+            <!-- Form -->
+                <form action="{% url 'car-edit' slug=object.slug %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class=" gap-12 gap-y-4">
+                 <div class="flex flex-wrap justify-center gap-4 mb-4">
+                    <!-- Form Group -->
+                    <div>
+                        <label for="brand" class="block text-sm mb-2 dark:text-white">Brand</label>
+                            <div class="relative w-80">
+                            <select name="brand" id="brand" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600">
+                            {% for brand in brands %}
+                                {% if brand.id == car.brand.id %}
+                                <option value="{{ brand.id }}" selected>{{ brand.name }}</option>
+                                {% else %}
+                                <option value="{{ brand.id }}">{{ brand.name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+{#                                <select  name="brand" id="brand" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600">#}
+{#                                {% for value, label in form.brand.field.choices %}#}
+{#                                    <option value="{{ value }}" {% if value == brand %}selected{% endif %}>{{ label }}</option>#}
+{#                                {% endfor %}#}
+{#                                </select>#}
+                            {% if form.errors.brand %}
+                                    <ul class="text-red-500">{{ form.errors.brand }}</ul>
+                                {% endif %}
+                            </div>
+                    </div>
+                    <!-- End Form Group -->
+                      <!-- Form Group -->
+                    <div>
+                      <label for="model" class="block text-sm mb-2 dark:text-white">Model</label>
+                      <div class="relative w-80">
+                        <input type="text" id="model" name="model" placeholder="Enter car's model" value="{{ model }}" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600">
+                      </div>
+                        {% if form.errors.model %}
+                            <ul class="text-red-500">{{ form.errors.model }}</ul>
+                        {% endif %}
+                    </div>
+                    <!-- End Form Group -->
+                 </div>
+                <!-- Form Group -->
+                 <div class="flex flex-wrap justify-center gap-4 mb-4">
+                    <div>
+                      <label for="price" class="block text-sm mb-2 dark:text-white">Price</label>
+                      <div class="relative w-80">
+                        <input type="text" id="price" name="price" value="{{ price }}" placeholder="Enter car's price" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600">
+                      </div>
+                        {% if form.errors.price %}
+                                    <ul class="text-red-500">{{ form.errors.price }}</ul>
+                                {% endif %}
+                    </div>
+                    <!-- End Form Group -->
+                  <!-- Form Group -->
+                    <div>
+                      <label for="year" class="block text-sm mb-2 dark:text-white">Year</label>
+                      <div class="relative w-80">
+                        <input type="number" id="year" name="year"  value="{{ year }}" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600">
+                      </div>
+                        {% if form.errors.year %}
+                                    <ul class="text-red-500">{{ form.errors.year }}</ul>
+                                {% endif %}
+                    </div>
+                    <!-- End Form Group -->
+                 </div>
+                     <!-- Form Group -->
+                 <div class="flex flex-wrap justify-center gap-4 mb-4">
+                    <div>
+                      <label for="category" class="block text-sm mb-2 dark:text-white">Category</label>
+                      <div class="relative w-80">
+                        <select name="category" id="category" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600">
+                            {% for category in categories %}
+                                {% if category.id == car.category.id %}
+                                <option value="{{ category.id }}" selected>{{ category.name }}</option>
+                                {% else %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                      {% if form.errors.category %}
+                                    <p class="text-red-500">{{ form.errors.category }}</p>
+                                {% endif %}
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+                     <!-- Form Group -->
+                    <div>
+                      <label for="image" class="block text-sm mb-2 dark:text-white">Image</label>
+                      <div class="relative w-80">
+                        <input type="file" id="image" name="image" value="{{ image }}" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600">
+                      </div>
+                        {% if form.errors.image %}
+                            <ul class="text-red-500">{{ form.errors.image }}</ul>
+                                {% endif %}
+                    </div>
+                    <!-- End Form Group -->
+                 </div>
+                     <!-- Form Group -->
+                 <div class="flex flex-wrap justify-center gap-4 mb-4">
+                    <div>
+                      <label for="gearbox" class="block text-sm mb-2 dark:text-white">Gearbox</label>
+                      <div class="relative w-80">
+                          <select name="gearbox" id="gearbox" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600">
+                            {% for value, label in form.gearbox.field.choices %}
+                                <option value="{{ value }}" {% if value == gearbox %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                          </select>
+                      {% if form.errors.gearbox %}
+                                    <ul class="text-red-500">{{ form.errors.gearbox }}</ul>
+                                {% endif %}
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+                <!-- Form Group -->
+                    <div>
+                      <label for="slug" class="block text-sm mb-2 dark:text-white">Slug</label>
+                      <div class="relative w-80">
+                        <input type="text" id="slug" name="slug" value="{{ slug }}" placeholder="Enter car's slug" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600">
+                      </div>
+                        {% if form.errors.slug %}
+                                    <ul class="text-red-500">{{ form.errors.slug }}</ul>
+                                {% endif %}
+                    </div>
+                    <!-- End Form Group -->
+                 </div>
+                  </div>
+                <div class="mt-8 flex justify-center">
+                    <button type="submit" class="w-28 h-auto py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Save</button>
+                </div>
+            </form>
+            <!-- End Form -->
+          </div>
+        </div>
+      </div>
+    </main>
+{% endblock %}
